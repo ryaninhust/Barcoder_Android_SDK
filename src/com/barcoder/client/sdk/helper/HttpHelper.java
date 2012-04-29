@@ -2,7 +2,7 @@ package com.barcoder.client.sdk.helper;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -16,24 +16,23 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.utils.URIUtils;
+
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
 
 import com.barcoder.client.sdk.model.result.RestResult;
 
-public  class HttpHelper {
+public class HttpHelper {
 	public static Date lastModified;
 
 	public static final String host = "http://222.20.58.155:1080/";
-	
-	public static Boolean checkRestResult(RestResult result){
-		return result.getStatus_code()-200>10;
+
+	public static Boolean checkRestResult(RestResult result) {
+		return result.getStatus_code() - 200 > 10;
 	}
-    
-	public static RestResult doGET(String url,Boolean authRequest){
+
+	public static RestResult doGET(String url, Boolean authRequest) {
 		RestResult result = null;
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(url);
@@ -63,19 +62,22 @@ public  class HttpHelper {
 		}
 		return result;
 	}
-	public static RestResult doGET(String url, Boolean authRequest,Date conditionGet,List<NameValuePair> qparams) {
+
+	public static RestResult doGET(String url, Boolean authRequest,
+			Date conditionGet, List<NameValuePair> qparams) {
 		RestResult result = null;
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(url);
-		if (qparams!=null){
-			url=url+URLEncodedUtils.format(qparams, "UTF-8");
+		if (qparams != null) {
+			url = url + URLEncodedUtils.format(qparams, "UTF-8");
 		}
 		System.out.println(url);
 		httpGet.addHeader("Accept", "application/json");
 		httpGet.addHeader("Content-Type", "application/json");
-		if(conditionGet!=null){
-			httpGet.addHeader("If-Modified-Since", new SimpleDateFormat("E, DD MM YYYY HH mm ss Z").format(conditionGet));
-		
+		if (conditionGet != null) {
+			httpGet.addHeader("If-Modified-Since", new SimpleDateFormat(
+					"E, DD MM YYYY HH mm ss Z").format(conditionGet));
+
 		}
 		if (authRequest) {
 			httpGet.addHeader("Authorization",
@@ -99,7 +101,8 @@ public  class HttpHelper {
 		return result;
 	}
 
-	public static RestResult doPOST(String url, Boolean authRequest, String postData) {
+	public static RestResult doPOST(String url, Boolean authRequest,
+			String postData) {
 		RestResult result = null;
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
@@ -130,7 +133,8 @@ public  class HttpHelper {
 		return result;
 	}
 
-	public static RestResult doPUT(String url, Boolean authRequest, String postData) {
+	public static RestResult doPUT(String url, Boolean authRequest,
+			String postData) {
 		RestResult result = null;
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPut httpPut = new HttpPut(url);
@@ -159,8 +163,7 @@ public  class HttpHelper {
 
 	}
 
-	public static RestResult doDelete(String url, Boolean authRequest
-			) {
+	public static RestResult doDelete(String url, Boolean authRequest) {
 		RestResult result = null;
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpDelete httpDelete = new HttpDelete();
@@ -186,26 +189,27 @@ public  class HttpHelper {
 		}
 		return result;
 	}
-	
-	public static Date getLastModifiedDate(){
-		if (lastModified==null){
+
+	public static Date getLastModifiedDate() {
+		if (lastModified == null) {
 			return loadLastModifiedDate();
-		}
-		else{
+		} else {
 			return lastModified;
 		}
 	}
-	
-	public static void setLastModifiedDate(Date date){
-		lastModified=date;
-		
+
+	public static void setLastModifiedDate(Date date) {
+		lastModified = date;
+
 	}
-	//需要后期实现
-	public static void saveLastModifiedDate(){
-		
+
+	// 需要后期实现
+	public static void saveLastModifiedDate() {
+
 	}
-	//需要后期实现
-	public static Date loadLastModifiedDate(){
+
+	// 需要后期实现
+	public static Date loadLastModifiedDate() {
 		return new Date();
 	}
 }

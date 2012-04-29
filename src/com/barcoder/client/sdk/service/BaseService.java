@@ -23,4 +23,7 @@ public class BaseService {
 				restResult.getResponseContent(), Error.class);
 	}
 
+
+
+
 }
